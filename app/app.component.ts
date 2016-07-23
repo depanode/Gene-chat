@@ -4,9 +4,13 @@
 
 import { Component } from '@angular/core';
 
+import { ContactList } from './contact-list.component';
+import { ChatBlock } from './chat.component';
+
 @Component({
     selector: 'my-app',
-    template: `<h1>hello</h1>`
+    templateUrl: `app/app.component.html`,
+    directives: [ContactList, ChatBlock]
 })
 
 export class AppComponent{
