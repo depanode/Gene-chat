@@ -3,6 +3,8 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import 'rxjs/Rx';
 
 import { ContactList } from './contact-list.component';
 import { ChatBlock } from './chat.component';
@@ -12,7 +14,7 @@ import { ContactsService } from './contacts.service';
     selector: 'my-app',
     templateUrl: `app/app.component.html`,
     directives: [ContactList, ChatBlock],
-    providers: [ContactsService]
+    providers: [ContactsService, HTTP_PROVIDERS]
 })
 
 export class AppComponent implements OnInit{
@@ -20,7 +22,7 @@ export class AppComponent implements OnInit{
 
     }
 
-    contacts = [];
+    contacts;
     selected;
 
     contactChanged(contact) {
@@ -29,10 +31,15 @@ export class AppComponent implements OnInit{
 
     getContacts() {
         this.ContactsService.getContacts()
-            .then(contacts => {
+            .subscribe(contacts => {
+                console.log(contacts);
                 this.contacts = contacts;
                 this.selected = contacts[0];
             });
+            /*.then(contacts => {
+                this.contacts = contacts;
+
+            });*/
     }
 
     ngOnInit() {

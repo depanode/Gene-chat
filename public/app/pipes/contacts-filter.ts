@@ -10,6 +10,7 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 @Injectable()
 export class filterContactsBy implements PipeTransform {
     transform(contacts: any[], name: string, onlyOnline: boolean): any {
+        if(!contacts) return contacts;
         return contacts.filter(contact => {
             let nameContains = name ? contact.name.toLowerCase().includes(name.toLowerCase()) : true;
             let status = onlyOnline ? contact.online === onlyOnline : true;
