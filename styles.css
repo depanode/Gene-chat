@@ -29,6 +29,7 @@ strong {
 .main {
     width: 80%;
     margin: 0 auto;
+    height: 100%;
 }
 
 .top-bar {
@@ -206,9 +207,6 @@ strong {
 
 .chat-block .messages-block {
 
-    top: 80px;
-    bottom: 20px;
-    width: 100%;
 }
 
 .message-header {
