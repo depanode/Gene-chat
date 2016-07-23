@@ -4,20 +4,27 @@ export const Contacts = [
     name: 'Echo Bot',
     online: true,
     avatar: '',
-    description: 'Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta.'
+    description: 'На любое сообщение отвечает этим же сообщением.'
   },
   {
     id: 2,
     name: 'Reverse Bot',
     online: false,
     avatar: '',
-    description: 'Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta.'
+    description: 'На любое сообщение отвечает этим же сообщением, но перевернутым.'
   },
   {
     id: 3,
     name: 'Spam Bot',
     online: true,
     avatar: '',
-    description: 'Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta.'
+    description: 'Игнорирует все, что ему пишешь. Раз в 10-120 секунд (величина случайная) пишет что-то в чат.'
+  },
+  {
+    id: 4,
+    name: 'Ignore bot',
+    online: true,
+    avatar: '',
+    description: 'Просто все игнорирует, ничего не пишет.'
   }
 ];

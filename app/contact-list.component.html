@@ -5,7 +5,10 @@
     </div>
 
     <div class='contacts'>
-        <div class='contact' *ngFor="let contact of contacts | filterContactsBy : nameContains : onlyOnline">
+        <div class='contact'
+             [class.selected]="selectedContact === contact"
+             *ngFor="let contact of contacts | filterContactsBy : nameContains : onlyOnline"
+             (click)="selectContact(contact)">
             <div class='contact-avatar'>
                 <div class='contact-status' [class.online]="contact.online"></div>
             </div>

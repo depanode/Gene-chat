@@ -71,7 +71,7 @@ strong {
     border-radius: 5px;
 }
 
-.contacts .contact.active{
+.contacts .contact.selected{
     background-color: #f8f8f8;
 }
 

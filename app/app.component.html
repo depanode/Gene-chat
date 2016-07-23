@@ -1,7 +1,7 @@
 <div class='body-bar'>
     <div class='main'>
-        <chat-block></chat-block>
-        <contact-list></contact-list>
+        <chat-block [selected]="selected"></chat-block>
+        <contact-list [contacts]="contacts" (contactSelected)="contactChanged($event)"></contact-list>
         <div class='clear'></div>
     </div>
 </div>
