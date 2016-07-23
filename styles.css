@@ -1,0 +1,309 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    background-color: #586670;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+span {
+    font-family: 'Open Sans', serif;
+    font-weight: 400;
+}
+
+strong {
+    font-family: 'Open Sans', serif;
+    font-weight: 600;
+}
+
+.main {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.top-bar {
+    height: 60px;
+    background-color: #ffffff;
+}
+
+.top-bar p{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.top-bar strong{
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.body-bar {
+    position: absolute;
+    top: 80px;
+    bottom: 20px;
+    width: 100%;
+}
+
+.right-panel {
+    width: 20%;
+    float: right;
+    background-color: #ffffff;
+    height: 100%;
+}
+
+.contacts {
+
+}
+
+.contacts .contact{
+    height: 60px;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.contacts .contact.active{
+    background-color: #f8f8f8;
+}
+
+.contact .contact-avatar{
+    height: 100%;
+    width: 60px;
+    background-color: cornflowerblue;
+    float: left;
+    border-radius: 5px;
+}
+
+.contact .contact-description{
+    height: 100%;
+    padding: 3px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.contact .contact-description p{
+    font-size: 12px;
+    line-height: 1.2;
+    color: grey;
+}
+
+.contact .contact-description strong{
+    font-size: 14px;
+}
+
+.contact-status {
+    width: 15px;
+    height: 15px;
+    border-radius: 10px;
+    position: relative;
+    left: 47px;
+    top: 47px;
+}
+
+.input-holder {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    padding: 5px;
+}
+
+.input-holder form {
+    display: table;
+    width: 100%;
+}
+
+.input-holder form div {
+    display: table-cell;
+    padding: 5px;
+}
+
+.input-holder input[type='text'] {
+    width: 100%;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    border-color: #2e6da4;
+}
+
+.input-holder input[type='submit'] {
+    width: 98%;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.contact-status.online {
+    background-color: #20d63e;
+}
+
+.contact-status.offline {
+    background-color: grey;
+}
+
+.right-panel .tabs {
+    display: table;
+    height: 40px;
+    width: 100%;
+    font-size: 13px;
+}
+
+.right-panel .tabs .tab{
+    display: table-cell;
+    height: 100%;
+    width: 50%;
+    border-color: grey;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+
+.right-panel .tabs .tab.active{
+    background-color: inherit;
+}
+
+.chat-block {
+    width: 80%;
+    height: 100%;
+    float: left;
+    background-color: #d7dfe7;
+    position: relative;
+}
+
+.message-block {
+    margin: 20px;
+    height: 60px;
+    width: 60%;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.chat-block .messages-block {
+
+    top: 80px;
+    bottom: 20px;
+    width: 100%;
+}
+
+.message-header {
+    height: 40%;
+    border-radius: 5px 5px 0 0;
+    padding: 5px;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.message-body {
+    height: 60%;
+    line-height: 2em;
+    background-color: #f4f8fb;
+    border-radius: 0 0 5px 5px;
+    font-size: 14px;
+}
+
+.message-body span {
+    margin: 10px;
+}
+
+.message-block.me{
+    position: relative;
+    float: right;
+}
+
+.message-block.me::after {
+    content: " ";
+    position: absolute;
+    top: 80%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent transparent #f4f8fb;
+}
+
+.message-block.bot{
+    position: relative;
+    float: left;
+}
+
+.message-block.bot::after {
+    content: " ";
+    position: absolute;
+    top: 80%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent #f4f8fb transparent transparent;
+}
+
+.message-block.me .message-header{
+    background-color: #f0cbb3;
+}
+
+.message-block.bot .message-header{
+    background-color: #becbd9;
+}
+
+.message-author {
+
+}
+
+.message-data {
+    float: right;
+    text-align: right;
+    color: grey;
+}
+
+.clear {
+    clear: both;
+}
+
+.top-info {
+    width: 100%;
+    height: 150px;
+}
+
+.top-info .avatar {
+    width: 150px;
+    height: 100%;
+    float: left;
+    background-color: purple;
+}
+
+.top-info .user-info {
+    height: 100%;
+    background-color: #becbd9;
+}
+
+.top-info .user-info p{
+    margin-left: 150px;
+    padding: 10px;
+    font-size: 14px;
+}
