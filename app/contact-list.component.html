@@ -1,35 +1,17 @@
 <div class='right-panel'>
     <div class="tabs">
-        <div class='tab active'><span>All</span></div>
-        <div class='tab'><span>Online</span></div>
+        <div class='tab' [class.active]="!onlyOnline" (click)="showOnline(false)"><span>All</span></div>
+        <div class='tab' [class.active]="onlyOnline" (click)="showOnline(true)"><span>Online</span></div>
     </div>
 
     <div class='contacts'>
-        <div class='contact'>
+        <div class='contact' *ngFor="let contact of contacts | filterContactsBy : nameContains : onlyOnline">
             <div class='contact-avatar'>
-                <div class='contact-status online'></div>
+                <div class='contact-status' [class.online]="contact.online"></div>
             </div>
             <div class='contact-description'>
-                <strong>Echo Bot</strong>
-                <p><span>Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta. Lorem Ipsum ha estat el text estàndard de la indústria des de l'any 1500, quan un impressor desconegut va fer servir una galerada de text i la va mesclar per crear un llibre de mostres tipogràfiques.</span></p>
-            </div>
-        </div>
-        <div class='contact active'>
-            <div class='contact-avatar'>
-                <div class='contact-status offline'></div>
-            </div>
-            <div class='contact-description'>
-                <strong>Reverse Bot</strong>
-                <p><span>Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta. Lorem Ipsum ha estat el text estàndard de la indústria des de l'any 1500, quan un impressor desconegut va fer servir una galerada de text i la va mesclar per crear un llibre de mostres tipogràfiques.</span></p>
-            </div>
-        </div>
-        <div class='contact'>
-            <div class='contact-avatar'>
-                <div class='contact-status online'></div>
-            </div>
-            <div class='contact-description'>
-                <strong>Spam Bot</strong>
-                <p><span>Lorem Ipsum és un text de farciment usat per la indústria de la tipografia i la impremta. Lorem Ipsum ha estat el text estàndard de la indústria des de l'any 1500, quan un impressor desconegut va fer servir una galerada de text i la va mesclar per crear un llibre de mostres tipogràfiques.</span></p>
+                <strong>{{contact.name}}</strong>
+                <p><span>{{contact.description}}</span></p>
             </div>
         </div>
         <!--div class='input-holder'>
