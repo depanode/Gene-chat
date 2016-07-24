@@ -18,10 +18,16 @@
                 <p><span>{{contact.description}}</span></p>
             </div>
         </div>
-        <!--div class='input-holder'>
+        <!--div>
             <div>
                 <input type='text' placeholder='Search...'>
             </div>
         </div-->
+
+    </div>
+    <div class='input-holder'>
+        <form>
+            <div><input type='text' [(ngModel)]="nameContains" placeholder='Search...'></div>
+        </form>
     </div>
 </div>
