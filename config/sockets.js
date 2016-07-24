@@ -7,6 +7,16 @@ var Message   = mongoose.model('Message');
 
 var handlers  = require('../config/messageHandlers');
 
+function sendHistory(bot, me, callback) {
+    Message
+        .find({user: me, bot: bot.id})
+        .sort({date: -1})
+        .limit(10)
+        .populate('bot')
+        .exec(callback)
+}
+
+
 module.exports = function (io) {
 
     io.on('connection', function(socket) {
@@ -18,17 +28,22 @@ module.exports = function (io) {
             socket.join(data.id);
 
             Contact.find({}, function(err, contacts) {
-                if(err){
-                    return next(err);
-                }
-                socket.bot = contacts[0];
-                socket.me = data.id;
+                    if(err){return next(err);}
 
-                Message.find({user: socket.me, bot: socket.bot.id}, function(err, data) {
-                    socket.to(data.id).emit('recieveMessage', data);
-                })
+                    socket.bot = contacts[0];
+                    socket.me = data.id;
 
-            });
+                    sendHistory(socket.bot, socket.me, function(err, data) {
+                         socket.emit('recieveHistory', data);
+                    })
+            })
+        });
+
+        socket.on('changeContact', function(contact){
+            socket.bot = contact;
+            sendHistory(socket.bot, socket.me, function(err, data) {
+                socket.emit('recieveHistory', data);
+            })
         });
 
         socket.on('sendMessage', function(data) {

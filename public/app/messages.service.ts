@@ -18,16 +18,25 @@ export class MessagesService {
 
     socketConnect() {
         let socketid = localStorage.getItem('socketid');
+
         this.socket = io('http://localhost:3000');
+
         this.socket.on('connected', function(data){
             if(!socketid){
                 localStorage.setItem('socketid', data.id);
             }
         });
+
         this.socket.emit('join', {id: localStorage.getItem('socketid')});
+
         this.socket.on('recieveMessage', function(data) {
-            console.log(this);
             this.messages.push(data);
+        }.bind(this));
+
+        this.socket.on('recieveHistory', function(data) {
+            data.forEach(function(el) {
+                this.messages.push(el);
+            }, this);
         }.bind(this));
     }
 
@@ -36,6 +45,13 @@ export class MessagesService {
             'user': localStorage.getItem("soketid"),
             'text': message
         });
+    }
+
+    selectContact(contact) {
+        while(this.messages.length) {
+            this.messages.pop();
+        }
+        this.socket.emit('changeContact', contact);
     }
 
 }

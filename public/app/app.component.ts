@@ -24,12 +24,13 @@ export class AppComponent implements OnInit{
 
     }
 
-    contacts;
     messages = this.MessagesService.messages;
+    contacts;
     selected;
 
     contactChanged(contact) {
         this.selected = contact;
+        this.MessagesService.selectContact(contact);
     }
 
     getContacts() {

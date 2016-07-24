@@ -2,7 +2,7 @@
  * Created by argho on 24.07.2016.
  */
 var mongoose = require('mongoose');
-var Message   = mongoose.model('Message');
+var Message  = mongoose.model('Message');
 
 module.exports = {
     echo: function(message) {
@@ -11,7 +11,7 @@ module.exports = {
     reverse: function(message) {
         return message.split('').reverse().join('');
     },
-    spam: function(callback) {
+    spam: function() {
         Message.random(callback);
     },
     ignore: function() {
