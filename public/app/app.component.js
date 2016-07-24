@@ -28,14 +28,9 @@ var AppComponent = (function () {
         var _this = this;
         this.ContactsService.getContacts()
             .subscribe(function (contacts) {
-            console.log(contacts);
             _this.contacts = contacts;
             _this.selected = contacts[0];
         });
-        /*.then(contacts => {
-            this.contacts = contacts;
-
-        });*/
     };
     AppComponent.prototype.ngOnInit = function () {
         this.getContacts();

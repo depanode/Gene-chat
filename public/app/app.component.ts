@@ -32,14 +32,9 @@ export class AppComponent implements OnInit{
     getContacts() {
         this.ContactsService.getContacts()
             .subscribe(contacts => {
-                console.log(contacts);
                 this.contacts = contacts;
                 this.selected = contacts[0];
             });
-            /*.then(contacts => {
-                this.contacts = contacts;
-
-            });*/
     }
 
     ngOnInit() {

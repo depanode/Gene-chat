@@ -13,7 +13,6 @@ import { filterContactsBy } from './pipes/contacts-filter';
 })
 
 export class ContactList{
-
     constructor(){
 
     }
@@ -23,9 +22,11 @@ export class ContactList{
 
     selectedContact;
 
-    @Input() contacts;
+    @Input()
+    contacts;
 
-    @Output() contactSelected = new EventEmitter();
+    @Output()
+    contactSelected = new EventEmitter();
 
     showOnline(online) {
         this.onlyOnline = online;

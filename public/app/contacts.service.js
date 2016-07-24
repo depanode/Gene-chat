@@ -19,12 +19,8 @@ var ContactsService = (function () {
         this.contactsUrl = '/contacts';
     }
     ContactsService.prototype.getContacts = function () {
-        //return Promise.resolve(Contacts);
         return this.http.get(this.contactsUrl)
             .map(function (res) { return res.json(); });
-    };
-    ContactsService.prototype.setActiveContact = function (contact) {
-        this.activeContact = contact;
     };
     ContactsService = __decorate([
         core_1.Injectable(), 

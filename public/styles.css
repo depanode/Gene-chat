@@ -83,6 +83,12 @@ strong {
     border-radius: 5px;
 }
 
+.contact .contact-avatar img{
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+}
+
 .contact .contact-description{
     height: 100%;
     padding: 3px;
