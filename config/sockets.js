@@ -5,14 +5,15 @@ var mongoose  = require('mongoose');
 var Contact   = mongoose.model('Contact');
 var Message   = mongoose.model('Message');
 
-var handlers  = require('../config/messageHandlers');
+var handleMessage  = require('../config/messageHandlers');
 
 function sendHistory(bot, me, callback) {
     Message
-        .find({user: me, bot: bot.id})
+        .find({user: me, bot: bot._id})
         .sort({date: -1})
         .limit(10)
         .populate('bot')
+        .sort({date: 1})
         .exec(callback)
 }
 
@@ -28,14 +29,16 @@ module.exports = function (io) {
             socket.join(data.id);
 
             Contact.find({}, function(err, contacts) {
-                    if(err){return next(err);}
+                if(err){
+                    return next(err);
+                }
 
-                    socket.bot = contacts[0];
-                    socket.me = data.id;
+                socket.bot = contacts[0];
+                socket.me = data.id;
 
-                    sendHistory(socket.bot, socket.me, function(err, data) {
-                         socket.emit('recieveHistory', data);
-                    })
+                sendHistory(socket.bot, socket.me, function(err, data) {
+                     socket.emit('recieveHistory', data);
+                })
             })
         });
 
@@ -60,22 +63,15 @@ module.exports = function (io) {
             newMsg.save(function(err, msg) {
                 if (err) return next(err);
 
-                msg.bot = bot;                       //faster then model.populate
+                msg.bot = bot;                           //faster then model.populate
                 socket.emit('recieveMessage', msg);
-                setTimeout(function() {
-                    var botAnswer = new Message();
-                    botAnswer.date = Date.now();
-                    botAnswer.user = me;
-                    botAnswer.authorUser = false;
-                    botAnswer.bot  = bot._id;
-                    botAnswer.text = handlers[bot.messageHandler](msg.text);
-
-                    botAnswer.save(function(err, answer) {
-                        if (err) return next(err);
-                        answer.bot = bot;            //faster then model.populate
+                handleMessage(me, bot, msg, function(err, answer) {
+                    if(err) return next(err);
+                    if(answer) {
+                        answer.bot = bot;                //faster then model.populate
                         socket.emit('recieveMessage', answer);
-                    });
-                }, 2000);
+                    }
+                });
 
             })
 

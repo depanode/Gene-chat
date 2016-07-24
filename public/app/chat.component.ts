@@ -25,8 +25,10 @@ export class ChatBlock{
     messages;
 
     sendMessage() {
-        this.MessagesService.sendMessage((this.message));
-        this.message = '';
+        if (/\S/.test(this.message)) {
+            this.MessagesService.sendMessage((this.message));
+            this.message = '';
+        }
     }
 
 }

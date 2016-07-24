@@ -18,8 +18,10 @@ var ChatBlock = (function () {
         this.MessagesService = MessagesService;
     }
     ChatBlock.prototype.sendMessage = function () {
-        this.MessagesService.sendMessage((this.message));
-        this.message = '';
+        if (/\S/.test(this.message)) {
+            this.MessagesService.sendMessage((this.message));
+            this.message = '';
+        }
     };
     __decorate([
         core_1.Input(), 
