@@ -17,9 +17,11 @@ require('rxjs/Rx');
 var contact_list_component_1 = require('./contact-list.component');
 var chat_component_1 = require('./chat.component');
 var contacts_service_1 = require('./contacts.service');
+var messages_service_1 = require('./messages.service');
 var AppComponent = (function () {
-    function AppComponent(ContactsService) {
+    function AppComponent(ContactsService, MessagesService) {
         this.ContactsService = ContactsService;
+        this.MessagesService = MessagesService;
     }
     AppComponent.prototype.contactChanged = function (contact) {
         this.selected = contact;
@@ -34,15 +36,16 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.ngOnInit = function () {
         this.getContacts();
+        this.MessagesService.socketConnect();
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
             templateUrl: "app/app.component.html",
             directives: [contact_list_component_1.ContactList, chat_component_1.ChatBlock],
-            providers: [contacts_service_1.ContactsService, http_1.HTTP_PROVIDERS]
+            providers: [contacts_service_1.ContactsService, http_1.HTTP_PROVIDERS, messages_service_1.MessagesService]
         }), 
-        __metadata('design:paramtypes', [contacts_service_1.ContactsService])
+        __metadata('design:paramtypes', [contacts_service_1.ContactsService, messages_service_1.MessagesService])
     ], AppComponent);
     return AppComponent;
 }());

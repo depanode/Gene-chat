@@ -2,20 +2,24 @@
  * Created by argho on 23.07.2016.
  */
 var mongoose  = require('mongoose');
-//var Chat      = mongoose.model('Chat');
-//var Message   = mongoose.model('Message');
+var Contact   = mongoose.model('Contact');
+var Message   = mongoose.model('Message');
+var Chat      = mongoose.model('Chat');
 
 module.exports = function (io) {
 
     io.on('connection', function(socket) {
+        console.log(socket.id);
+
+        socket.emit('joined', {id: socket.id});
 
         socket.on('join', function(data) {
-            socket.join(data.user._id);
+            socket.join(data.id);
         });
 
-        socket.on('message send', function(data, fn) {
-
-            var myId     = data.from._id;
+        socket.on('sendMessage', function(data, fn) {
+console.log(data);
+            /*var myId     = data.from._id;
             var friendId = data.to._id;
 
             var query = {
@@ -24,7 +28,7 @@ module.exports = function (io) {
                 }
             };
 
-            Chat.findOne(query, function(err, chat) {
+            Chat.find(query, function(err, chat) {
                 if (err) return next(err);
 
                 var newMsg = new Message();
@@ -45,7 +49,7 @@ module.exports = function (io) {
                         });
                     });
                 })
-            })
+            })*/
         });
 
         socket.on('disconnect', function(data) {

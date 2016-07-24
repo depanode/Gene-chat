@@ -14,6 +14,9 @@ var contactSchema = new mongoose.Schema({
     avatar: {
         type: String
     },
+    messageHandler: {
+        type: String
+    },
     description: {
         type: String
     }

@@ -12,9 +12,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var messages_service_1 = require('./messages.service');
 var ChatBlock = (function () {
-    function ChatBlock() {
+    function ChatBlock(MessagesService) {
+        this.MessagesService = MessagesService;
     }
+    ChatBlock.prototype.sendMessage = function () {
+        this.MessagesService.sendMessage((this.message));
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
@@ -24,7 +29,7 @@ var ChatBlock = (function () {
             selector: 'chat-block',
             templateUrl: 'app/chat.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [messages_service_1.MessagesService])
     ], ChatBlock);
     return ChatBlock;
 }());

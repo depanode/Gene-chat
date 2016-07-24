@@ -4,7 +4,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ContactsService } from './contacts.service';
+import { MessagesService } from './messages.service';
 
 @Component({
     selector: 'chat-block',
@@ -12,11 +12,17 @@ import { ContactsService } from './contacts.service';
 })
 
 export class ChatBlock{
-    constructor() {
+    constructor(private MessagesService: MessagesService) {
 
     }
 
-    @Input() selected;
+    message;
 
+    @Input()
+    selected;
+
+    sendMessage() {
+        this.MessagesService.sendMessage((this.message));
+    }
 
 }

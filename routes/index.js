@@ -1,7 +1,9 @@
 var express     = require('express');
 var router      = express.Router();
 var mongoose    = require('mongoose');
+
 var bots        = require('../config/bots');
+var handlers    = require('../config/messageHandlers');
 
 var Contact     = mongoose.model('Contact');
 var Message     = mongoose.model('Message');
@@ -31,6 +33,20 @@ router.get('/contacts', function (req, res) {
         } else {
             res.json(contacts);
         }
+    })
+});
+
+router.get('/contacts/:id', function (req, res) {
+
+    var id = req.params.id;
+
+    Contact.findOne({_id: id}, function(err, contact) {
+        if (err) {
+            return next(err);
+        }
+
+        //handlers[contact.messageHandler]
+
     })
 });
 

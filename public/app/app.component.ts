@@ -9,20 +9,23 @@ import 'rxjs/Rx';
 import { ContactList } from './contact-list.component';
 import { ChatBlock } from './chat.component';
 import { ContactsService } from './contacts.service';
+import { MessagesService } from './messages.service';
 
 @Component({
     selector: 'my-app',
     templateUrl: `app/app.component.html`,
     directives: [ContactList, ChatBlock],
-    providers: [ContactsService, HTTP_PROVIDERS]
+    providers: [ContactsService, HTTP_PROVIDERS, MessagesService]
 })
 
 export class AppComponent implements OnInit{
-    constructor(private ContactsService: ContactsService) {
+    constructor(private ContactsService: ContactsService,
+                private MessagesService: MessagesService) {
 
     }
 
     contacts;
+    messages;
     selected;
 
     contactChanged(contact) {
@@ -39,6 +42,7 @@ export class AppComponent implements OnInit{
 
     ngOnInit() {
         this.getContacts();
+        this.MessagesService.socketConnect();
     }
 
 }

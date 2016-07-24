@@ -34,8 +34,8 @@
 
         <div class='clear'></div>
         <div class='input-holder'>
-            <form>
-                <div><input type='text' placeholder='Start chating!'></div>
+            <form (submit)="sendMessage()">
+                <div><input type='text' placeholder='Start chating!' [(ngModel)]="message"></div>
                 <div><input type='submit' value='Send message'></div>
             </form>
         </div>

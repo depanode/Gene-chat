@@ -1,6 +1,6 @@
 <div class='body-bar'>
     <div class='main'>
-        <chat-block [selected]="selected"></chat-block>
+        <chat-block [selected]="selected" [messages]="messages"></chat-block>
         <contact-list [contacts]="contacts" (contactSelected)="contactChanged($event)"></contact-list>
     </div>
 </div>
