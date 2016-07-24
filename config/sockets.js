@@ -63,12 +63,12 @@ module.exports = function (io) {
             newMsg.save(function(err, msg) {
                 if (err) return next(err);
 
-                msg.bot = bot;                           //faster then model.populate
                 socket.emit('recieveMessage', msg);
                 handleMessage(me, bot, msg, function(err, answer) {
                     if(err) return next(err);
                     if(answer) {
-                        answer.bot = bot;                //faster then model.populate
+                        answer = answer.toObject();
+                        answer.bot = socket.bot;               //faster then model.populate
                         socket.emit('recieveMessage', answer);
                     }
                 });
