@@ -10,10 +10,20 @@ import * as Ps from 'perfect-scrollbar';
     selector: '[ps]'
 })
 export class PsDirective {
-    constructor(private elementRef:ElementRef) {
+    constructor(private elementRef: ElementRef ) {
+
     }
 
+    element = this.elementRef.nativeElement;
+
     ngAfterViewInit() {
-        Ps.initialize(this.elementRef.nativeElement);
+        Ps.initialize(this.element);
     }
+
+    scrollDown() {
+        this.element.scrollTop = this.element.scrollHeight;
+        //Ps.update(this.element);
+        setTimeout(()=>Ps.update(this.element), 200)
+    }
+
 }

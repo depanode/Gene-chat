@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
 
     }
 
-    messages = this.MessagesService.messages;
+    messages;
     contacts;
     selected;
 
@@ -44,6 +44,7 @@ export class AppComponent implements OnInit{
 
     ngOnInit() {
         this.getContacts();
+        this.MessagesService.$messages.subscribe(data => this.messages = data);
         this.MessagesService.socketConnect();
     }
 

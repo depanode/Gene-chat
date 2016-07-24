@@ -23,7 +23,6 @@ var AppComponent = (function () {
     function AppComponent(ContactsService, MessagesService) {
         this.ContactsService = ContactsService;
         this.MessagesService = MessagesService;
-        this.messages = this.MessagesService.messages;
     }
     AppComponent.prototype.contactChanged = function (contact) {
         this.selected = contact;
@@ -38,7 +37,9 @@ var AppComponent = (function () {
         });
     };
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getContacts();
+        this.MessagesService.$messages.subscribe(function (data) { return _this.messages = data; });
         this.MessagesService.socketConnect();
     };
     AppComponent = __decorate([
