@@ -227,7 +227,7 @@ strong {
     top: 150px;
     bottom: 50px;
     left: 0;
-    right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+    right: 0; /* Increase/Decrease this value for cross-browser compatibility */
     overflow-y: scroll;
 }
 

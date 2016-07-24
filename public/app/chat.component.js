@@ -13,6 +13,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var messages_service_1 = require('./messages.service');
+var scrollbar_directive_1 = require('./directives/scrollbar.directive');
 var ChatBlock = (function () {
     function ChatBlock(MessagesService) {
         this.MessagesService = MessagesService;
@@ -34,7 +35,8 @@ var ChatBlock = (function () {
     ChatBlock = __decorate([
         core_1.Component({
             selector: 'chat-block',
-            templateUrl: 'app/chat.component.html'
+            templateUrl: 'app/chat.component.html',
+            directives: [scrollbar_directive_1.PsDirective]
         }), 
         __metadata('design:paramtypes', [messages_service_1.MessagesService])
     ], ChatBlock);

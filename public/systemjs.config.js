@@ -8,13 +8,15 @@
         'app':                        'app', // 'dist',
         '@angular':                   'scripts/@angular',
         'rxjs':                       'scripts/rxjs',
-        'socket.io-client':           'scripts/socket.io-client/socket.io.js'
+        'socket.io-client':           'scripts/socket.io-client/socket.io.js',
+        'perfect-scrollbar':          'scripts/perfect-scrollbar/dist/js/perfect-scrollbar.js'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
         'app':                        { main: 'main.js',  defaultExtension: 'js' },
         'rxjs':                       { defaultExtension: 'js' },
-        'socket.io-client':           { defaultExtension: 'js' }
+        'socket.io-client':           { defaultExtension: 'js' },
+        'perfect-scrollbar':          { defaultExtension: 'js' }
     };
     var ngPackageNames = [
         'common',

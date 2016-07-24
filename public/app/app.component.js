@@ -18,6 +18,7 @@ var contact_list_component_1 = require('./contact-list.component');
 var chat_component_1 = require('./chat.component');
 var contacts_service_1 = require('./contacts.service');
 var messages_service_1 = require('./messages.service');
+var scrollbar_directive_1 = require('./directives/scrollbar.directive');
 var AppComponent = (function () {
     function AppComponent(ContactsService, MessagesService) {
         this.ContactsService = ContactsService;
@@ -44,7 +45,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'my-app',
             templateUrl: "app/app.component.html",
-            directives: [contact_list_component_1.ContactList, chat_component_1.ChatBlock],
+            directives: [contact_list_component_1.ContactList, chat_component_1.ChatBlock, scrollbar_directive_1.PsDirective],
             providers: [contacts_service_1.ContactsService, http_1.HTTP_PROVIDERS, messages_service_1.MessagesService]
         }), 
         __metadata('design:paramtypes', [contacts_service_1.ContactsService, messages_service_1.MessagesService])
