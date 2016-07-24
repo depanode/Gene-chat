@@ -21,8 +21,12 @@ export class ChatBlock{
     @Input()
     selected;
 
+    @Input()
+    messages;
+
     sendMessage() {
         this.MessagesService.sendMessage((this.message));
+        this.message = '';
     }
 
 }

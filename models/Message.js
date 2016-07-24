@@ -1,20 +1,27 @@
 var mongoose = require('mongoose');
 
 var messageSchema = new mongoose.Schema({
-    author: {
+    bot: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Contact'
     },
-    recipient: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Contact'
+    user: {
+        type: String
+    },
+    authorUser: {
+        type: Boolean,
+        default: true
     },
     date: {
         type: Date,
         default: Date.now
     },
-    body: {
+    text: {
         type: String
+    },
+    chat: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat'
     }
 });
 

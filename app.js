@@ -13,7 +13,6 @@ var env = process.env.NODE_ENV || 'development';
 
 require('./models/Contact');
 require('./models/Message');
-require('./models/Chat');
 
 var config = require('./config/' + env);
 

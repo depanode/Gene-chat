@@ -14,15 +14,20 @@ export class MessagesService {
     }
 
     socket = null;
+    messages = [];
 
     socketConnect() {
+        let socketid = localStorage.getItem('socketid');
         this.socket = io('http://localhost:3000');
-        this.socket.on('joined', function(data){
-            localStorage.setItem('soketid', data.id);
+        this.socket.on('connected', function(data){
+            if(!socketid){
+                localStorage.setItem('socketid', data.id);
+            }
         });
-        this.socket.emit('join', {id: localStorage.getItem('soketid')});
-        this.socket.on('chatUpdate', function(data) {
-            this.conversation.push(data);
+        this.socket.emit('join', {id: localStorage.getItem('socketid')});
+        this.socket.on('recieveMessage', function(data) {
+            console.log(this);
+            this.messages.push(data);
         }.bind(this));
     }
 

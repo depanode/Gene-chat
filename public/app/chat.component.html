@@ -11,26 +11,15 @@
     </div>
     <div class='messages-block'>
 
-        <div class='message-block bot'>
+        <div class='message-block' [class.bot]="!message.authorUser" [class.me]="message.authorUser" *ngFor="let message of messages">
             <div class='message-header'>
-                <strong class='message-author'>Reverse Bot</strong>
-                <span class='message-data'>4:20 PM</span>
+                <strong class='message-author'>{{message.bot.name}}</strong>
+                <span class='message-data'>{{message.date | date: shortTime}}</span>
             </div>
             <div class='message-body'>
-                <span class='message-author'>Hello world!</span>
+                <span class='message-author'>{{message.text}}</span>
             </div>
         </div>
-
-        <div class='message-block me'>
-            <div class='message-header'>
-                <strong class='message-author'>Username</strong>
-                <span class='message-data'>4:21 PM</span>
-            </div>
-            <div class='message-body'>
-                <span class='message-text'>Hello robot</span>
-            </div>
-        </div>
-
 
         <div class='clear'></div>
         <div class='input-holder'>

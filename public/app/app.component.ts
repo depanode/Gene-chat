@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
     }
 
     contacts;
-    messages;
+    messages = this.MessagesService.messages;
     selected;
 
     contactChanged(contact) {

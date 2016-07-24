@@ -19,11 +19,16 @@ var ChatBlock = (function () {
     }
     ChatBlock.prototype.sendMessage = function () {
         this.MessagesService.sendMessage((this.message));
+        this.message = '';
     };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
     ], ChatBlock.prototype, "selected", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], ChatBlock.prototype, "messages", void 0);
     ChatBlock = __decorate([
         core_1.Component({
             selector: 'chat-block',

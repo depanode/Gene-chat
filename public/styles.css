@@ -211,6 +211,7 @@ strong {
     float: left;
     background-color: #d7dfe7;
     position: relative;
+    overflow: hidden;
 }
 
 .message-block {
@@ -222,7 +223,12 @@ strong {
 }
 
 .chat-block .messages-block {
-
+    position: absolute;
+    top: 150px;
+    bottom: 0;
+    left: 0;
+    right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+    overflow-y: scroll;
 }
 
 .message-header {

@@ -22,6 +22,7 @@ var AppComponent = (function () {
     function AppComponent(ContactsService, MessagesService) {
         this.ContactsService = ContactsService;
         this.MessagesService = MessagesService;
+        this.messages = this.MessagesService.messages;
     }
     AppComponent.prototype.contactChanged = function (contact) {
         this.selected = contact;

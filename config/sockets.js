@@ -4,52 +4,66 @@
 var mongoose  = require('mongoose');
 var Contact   = mongoose.model('Contact');
 var Message   = mongoose.model('Message');
-var Chat      = mongoose.model('Chat');
+
+var handlers  = require('../config/messageHandlers');
 
 module.exports = function (io) {
 
     io.on('connection', function(socket) {
-        console.log(socket.id);
 
-        socket.emit('joined', {id: socket.id});
+        socket.emit('connected', {id: socket.id});
 
         socket.on('join', function(data) {
+
             socket.join(data.id);
+
+            Contact.find({}, function(err, contacts) {
+                if(err){
+                    return next(err);
+                }
+                socket.bot = contacts[0];
+                socket.me = data.id;
+
+                Message.find({user: socket.me, bot: socket.bot.id}, function(err, data) {
+                    socket.to(data.id).emit('recieveMessage', data);
+                })
+
+            });
         });
 
-        socket.on('sendMessage', function(data, fn) {
-console.log(data);
-            /*var myId     = data.from._id;
-            var friendId = data.to._id;
+        socket.on('sendMessage', function(data) {
 
-            var query = {
-                participants: {
-                    $all: [myId, friendId]
-                }
-            };
+            var me     = socket.me;
+            var bot    = socket.bot;
 
-            Chat.find(query, function(err, chat) {
+            var newMsg  = new Message();
+            newMsg.date = Date.now();
+            newMsg.user = me;
+            newMsg.bot  = bot._id;
+            newMsg.text = data.text;
+
+            newMsg.save(function(err, msg) {
                 if (err) return next(err);
 
-                var newMsg = new Message();
-                newMsg.chat = chat._id;
-                newMsg.date = Date.now();
-                newMsg.author = myId;
-                newMsg.body = data.msg;
+                msg.bot = bot;                       //faster then model.populate
+                socket.emit('recieveMessage', msg);
+                setTimeout(function() {
+                    var botAnswer = new Message();
+                    botAnswer.date = Date.now();
+                    botAnswer.user = me;
+                    botAnswer.authorUser = false;
+                    botAnswer.bot  = bot._id;
+                    botAnswer.text = handlers[bot.messageHandler](msg.text);
 
-                newMsg.save(function(err, msg) {
-                    if (err) return next(err);
-
-                    chat.addMessage(msg, function(err) {
+                    botAnswer.save(function(err, answer) {
                         if (err) return next(err);
-
-                        msg.populate('author', function(err, msg) {
-                            socket.to(friendId).emit('new message', msg);
-                            fn(msg);
-                        });
+                        answer.bot = bot;            //faster then model.populate
+                        socket.emit('recieveMessage', answer);
                     });
-                })
-            })*/
+                }, 2000);
+
+            })
+
         });
 
         socket.on('disconnect', function(data) {
