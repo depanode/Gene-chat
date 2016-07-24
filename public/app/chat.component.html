@@ -1,7 +1,7 @@
 <div class='chat-block'>
     <div class='top-info'>
-        <div class='avatar'>
-
+        <div class='avatar contact-avatar' [ngStyle]="{'background-image': 'url(images/' + selected?.avatar + ')'}">
+            <!--img src="images/{{selected?.avatar}}"-->
         </div>
         <div class='user-info'>
             <p><strong>{{selected?.name}}</strong></p>

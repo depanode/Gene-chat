@@ -81,9 +81,15 @@ strong {
     background-color: cornflowerblue;
     float: left;
     border-radius: 5px;
+    background-size: 100%;
 }
 
-.contact .contact-avatar img{
+.contact-avatar{
+    border-radius: 5px;
+    background-size: 100%;
+}
+
+.contact-avatar img{
     height: 100%;
     width: 100%;
     border-radius: 5px;

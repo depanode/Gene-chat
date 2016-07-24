@@ -9,8 +9,8 @@
              [class.selected]="selectedContact === contact"
              *ngFor="let contact of contacts | filterContactsBy : nameContains : onlyOnline"
              (click)="selectContact(contact)">
-            <div class='contact-avatar'>
-                <img src="images/{{contact.avatar}}">
+            <div class='contact-avatar' [ngStyle]="{'background-image': 'url(images/' + contact.avatar + ')'}">
+                <!--img src="images/{{contact.avatar}}"-->
                 <div class='contact-status' [class.online]="contact.online"></div>
             </div>
             <div class='contact-description'>
