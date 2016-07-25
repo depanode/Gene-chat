@@ -4,14 +4,16 @@
 
 import { Directive, ElementRef } from '@angular/core';
 
+import { MessagesService } from '../messages.service';
 import * as Ps from 'perfect-scrollbar';
 
 @Directive({
     selector: '[ps]'
 })
 export class PsDirective {
-    constructor(private elementRef: ElementRef ) {
-
+    constructor(private elementRef: ElementRef,
+                private MessagesService: MessagesService) {
+        this.MessagesService.$scroll.subscribe(() => setTimeout(this.scrollDown.bind(this), 500));
     }
 
     element = this.elementRef.nativeElement;
@@ -22,8 +24,7 @@ export class PsDirective {
 
     scrollDown() {
         this.element.scrollTop = this.element.scrollHeight;
-        //Ps.update(this.element);
-        setTimeout(()=>Ps.update(this.element), 200)
+        Ps.update(this.element);
     }
 
 }

@@ -12,6 +12,7 @@ import * as io from 'socket.io-client';
 export class MessagesService {
     constructor(private http: Http) {
         this.$messages = new Observable(observer => this.messagesObserver = observer);
+        this.$scroll = new Observable(observer => this.scrollObserver = observer);
     }
 
     messages = [];
@@ -19,6 +20,8 @@ export class MessagesService {
     socket;
     messagesObserver;
     $messages;
+    $scroll;
+    scrollObserver;
 
     socketConnect() {
 
@@ -37,7 +40,7 @@ export class MessagesService {
         this.socket.on('recieveMessage', (data) =>{
             this.messages.push(data);
             this.messagesObserver.next(this.messages);
-            this.PsDirective.scrollDown();
+            this.scrollObserver.next();
         });
 
         this.socket.on('recieveHistory', data => {
