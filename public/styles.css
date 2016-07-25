@@ -43,6 +43,15 @@ my-app:empty + .loading {
     z-index: 100;
 }
 
+my-app:empty + .loading h1 {
+    color: #EEE;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translate(0, -50%);
+}
+
 .main {
     width: 80%;
     margin: 0 auto;

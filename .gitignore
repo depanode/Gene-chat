@@ -1,3 +1,5 @@
 node_modules
 bower_components
 .idea
+wwwroot/public/app/**/*.js
+wwwroot/public/app/**/*.map
