@@ -3,7 +3,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import * as io from 'socket.io-client';
@@ -46,6 +46,7 @@ export class MessagesService {
         this.socket.on('recieveHistory', data => {
             this.messages = data;
             this.messagesObserver.next(this.messages);
+            this.scrollObserver.next();
         });
     }
 
