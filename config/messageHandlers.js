@@ -35,7 +35,7 @@ function handleMessage(me, bot, message, callback) {
 
     var handler = handlers[bot.messageHandler];
 
-    setTimeout(saveMessage, 1500);
+    setTimeout(saveMessage, 1000);
 
     function saveMessage() {
          handler(message, function(err, message) {

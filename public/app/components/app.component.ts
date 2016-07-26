@@ -14,7 +14,7 @@ import { PsDirective } from '../directives/scrollbar.directive';
 
 @Component({
     selector: 'my-app',
-    templateUrl: `app/components/app.component.html`,
+    templateUrl: 'app/components/app.component.html',
     directives: [ContactList, ChatBlock, PsDirective],
     providers: [ContactsService, HTTP_PROVIDERS, MessagesService]
 })

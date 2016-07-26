@@ -8,25 +8,23 @@ var Message   = mongoose.model('Message');
 var handleMessage  = require('../config/messageHandlers');
 var commands       = require('../config/commands');
 
-function sendHistory(bot, me, callback) {
-    Message
-        .find({user: me, bot: bot._id})
-        .sort({date: -1})
-        .limit(10)
-        .populate('bot')
-        .sort({date: 1})
-        .exec(callback)
-}
-
-
 module.exports = function (io) {
 
     io.on('connection', function(socket) {
 
         socket.emit('connected', {id: socket.id});
 
-        socket.on('join', function(data) {
+        socket.on('join', join);
 
+        socket.on('changeContact', changeContact);
+
+        socket.on('sendMessage', sendMessage);
+
+        socket.on('disconnect', disconnect);
+
+        ///////////////////////////////////////////////////
+
+        function join(data) {
             socket.join(data.id);
 
             Contact.find({}, function(err, contacts) {
@@ -38,13 +36,12 @@ module.exports = function (io) {
                 socket.me = data.id;
 
                 sendHistory(socket.bot, socket.me, function(err, data) {
-                     socket.emit('recieveHistory', data);
+                    socket.emit('recieveHistory', data);
                 })
             })
-        });
+        }
 
-        socket.on('changeContact', function(contact){
-
+        function changeContact(contact){
             Contact.findOne({_id: contact._id}, function(err, contact) {
                 if(err){
                     return next(err);
@@ -56,10 +53,9 @@ module.exports = function (io) {
                     socket.emit('recieveHistory', data);
                 })
             })
-        });
+        }
 
-        socket.on('sendMessage', function(data) {
-
+        function sendMessage(data) {
             var me     = socket.me;
             var bot    = socket.bot;
 
@@ -91,15 +87,23 @@ module.exports = function (io) {
                             socket.emit('recieveMessage', answer);
                         }
                     });
-
                 })
             }
+        }
 
-        });
+        function disconnect(data) {
 
-        socket.on('disconnect', function(data) {
-
-        });
+        }
 
     });
 };
+
+function sendHistory(bot, me, callback) {
+    Message
+        .find({user: me, bot: bot._id})
+        .sort({date: -1})
+        .limit(10)
+        .populate('bot')
+        .sort({date: 1})
+        .exec(callback)
+}

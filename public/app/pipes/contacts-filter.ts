@@ -7,6 +7,7 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 @Pipe({
     name: 'filterContactsBy'
 })
+
 @Injectable()
 export class filterContactsBy implements PipeTransform {
     transform(contacts: any[], name: string, onlyOnline: boolean): any {

@@ -2,7 +2,7 @@
  * Created by argho on 23.07.2016.
  */
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { MessagesService } from '../services/messages.service';
 import { PsDirective } from '../directives/scrollbar.directive';
@@ -28,7 +28,7 @@ export class ChatBlock{
 
     sendMessage() {
         if (/\S/.test(this.message)) {
-            this.MessagesService.sendMessage((this.message));
+            this.MessagesService.sendMessage(this.message);
             this.message = '';
         }
     }
