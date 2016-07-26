@@ -25,7 +25,7 @@
 
     </div>
     <div class='input-holder'>
-        <form (submit)="sendMessage()">
+        <form class="send-message" (submit)="sendMessage()">
             <div><input type='text' placeholder='Start chating!' [(ngModel)]="message"></div>
             <div><input type='submit' value='Send message'></div>
         </form>
