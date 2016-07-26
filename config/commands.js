@@ -8,11 +8,13 @@ var Contact  = mongoose.model('Contact');
 module.exports = {
     '/offline' : {
         handler: goOffline,
-        emit   : 'botStatus'
+        action : 'broadcast',
+        event  : 'botStatus'
     },
     '/online'  : {
         handler: goOnline,
-        emit   : 'botStatus'
+        action : 'broadcast',
+        event  : 'botStatus'
     }
 };
 
@@ -22,7 +24,7 @@ function goOffline(msg, bot, callback) {
         if(err) {
             return next(err);
         }
-        callback(msg, bot, self.emit);
+        callback(msg, bot, self.action, self.event);
     });
 }
 
@@ -32,6 +34,6 @@ function goOnline(msg, bot, callback) {
         if(err) {
             return next(err);
         }
-        callback(msg, bot, self.emit);
+        callback(msg, bot, self.action, self.event);
     });
 }

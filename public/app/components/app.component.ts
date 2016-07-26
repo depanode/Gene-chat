@@ -22,7 +22,6 @@ import { PsDirective } from '../directives/scrollbar.directive';
 export class AppComponent implements OnInit{
     constructor(private ContactsService: ContactsService,
                 private MessagesService: MessagesService) {
-
     }
 
     messages;
@@ -48,8 +47,7 @@ export class AppComponent implements OnInit{
         this.MessagesService.socketConnect();
         this.MessagesService.$status.subscribe(data => {
             let index = this.contacts.findIndex(contact => contact._id === data._id);
-            this.contacts.splice(index, 1, data);
-            this.contacts = this.contacts.slice();
+            this.contacts[index].online = data.online;
         });
     }
 

@@ -18,7 +18,7 @@ export class ContactList{
     }
 
     onlyOnline: boolean = false;
-    nameContains: string = ''; //TODO filter by name
+    nameContains: string = '';
 
     selectedContact;
 

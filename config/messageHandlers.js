@@ -29,9 +29,13 @@ var handlers = {
 
 };
 
+module.exports = handleMessage;
+
 function handleMessage(me, bot, message, callback) {
 
     var handler = handlers[bot.messageHandler];
+
+    setTimeout(saveMessage, 1500);
 
     function saveMessage() {
          handler(message, function(err, message) {
@@ -53,14 +57,7 @@ function handleMessage(me, bot, message, callback) {
                 botAnswer.save(callback);
         });
     }
-
-    setTimeout(saveMessage, 1500);
 }
 
-module.exports = handleMessage;
 
-/*function(err, answer) {
-if (err) return next(err);
-answer.bot = bot;            //faster then model.populate
-socket.emit('recieveMessage', answer);
-}*/
+
