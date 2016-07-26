@@ -4,11 +4,11 @@
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { filterContactsBy } from './pipes/contacts-filter';
+import { filterContactsBy } from '../pipes/contacts-filter';
 
 @Component({
     selector: 'contact-list',
-    templateUrl: `app/contact-list.component.html`,
+    templateUrl: `app/components/contact-list.component.html`,
     pipes: [filterContactsBy]
 })
 

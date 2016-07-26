@@ -4,7 +4,7 @@
 
 import { Directive, ElementRef } from '@angular/core';
 
-import { MessagesService } from '../messages.service';
+import { MessagesService } from '../services/messages.service';
 import * as Ps from 'perfect-scrollbar';
 
 @Directive({

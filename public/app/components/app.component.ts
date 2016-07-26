@@ -8,13 +8,13 @@ import 'rxjs/Rx';
 
 import { ContactList } from './contact-list.component';
 import { ChatBlock } from './chat.component';
-import { ContactsService } from './contacts.service';
-import { MessagesService } from './messages.service';
-import { PsDirective } from './directives/scrollbar.directive';
+import { ContactsService } from '../services/contacts.service';
+import { MessagesService } from '../services/messages.service';
+import { PsDirective } from '../directives/scrollbar.directive';
 
 @Component({
     selector: 'my-app',
-    templateUrl: `app/app.component.html`,
+    templateUrl: `app/components/app.component.html`,
     directives: [ContactList, ChatBlock, PsDirective],
     providers: [ContactsService, HTTP_PROVIDERS, MessagesService]
 })

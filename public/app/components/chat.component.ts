@@ -4,12 +4,12 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 
-import { MessagesService } from './messages.service';
-import { PsDirective } from './directives/scrollbar.directive';
+import { MessagesService } from '../services/messages.service';
+import { PsDirective } from '../directives/scrollbar.directive';
 
 @Component({
     selector: 'chat-block',
-    templateUrl: 'app/chat.component.html',
+    templateUrl: 'app/components/chat.component.html',
     directives: [PsDirective]
 })
 
