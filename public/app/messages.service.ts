@@ -13,15 +13,19 @@ export class MessagesService {
     constructor(private http: Http) {
         this.$messages = new Observable(observer => this.messagesObserver = observer);
         this.$scroll = new Observable(observer => this.scrollObserver = observer);
+        this.$status = new Observable(observer => this.statusObserver = observer);
     }
 
     messages = [];
 
     socket;
-    messagesObserver;
+
     $messages;
+    messagesObserver;
     $scroll;
     scrollObserver;
+    $status;
+    statusObserver;
 
     socketConnect() {
 
@@ -47,6 +51,10 @@ export class MessagesService {
             this.messages = data;
             this.messagesObserver.next(this.messages);
             this.scrollObserver.next();
+        });
+
+        this.socket.on('botStatus', data => {
+            this.statusObserver.next(data);
         });
     }
 

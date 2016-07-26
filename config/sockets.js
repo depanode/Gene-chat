@@ -6,6 +6,7 @@ var Contact   = mongoose.model('Contact');
 var Message   = mongoose.model('Message');
 
 var handleMessage  = require('../config/messageHandlers');
+var commands       = require('../config/commands');
 
 function sendHistory(bot, me, callback) {
     Message
@@ -43,9 +44,17 @@ module.exports = function (io) {
         });
 
         socket.on('changeContact', function(contact){
-            socket.bot = contact;
-            sendHistory(socket.bot, socket.me, function(err, data) {
-                socket.emit('recieveHistory', data);
+
+            Contact.findOne({_id: contact._id}, function(err, contact) {
+                if(err){
+                    return next(err);
+                }
+
+                socket.bot = contact;
+
+                sendHistory(socket.bot, socket.me, function(err, data) {
+                    socket.emit('recieveHistory', data);
+                })
             })
         });
 
@@ -54,26 +63,34 @@ module.exports = function (io) {
             var me     = socket.me;
             var bot    = socket.bot;
 
-            var newMsg  = new Message();
-            newMsg.date = Date.now();
-            newMsg.user = me;
-            newMsg.bot  = bot._id;
-            newMsg.text = data.text;
+            var command = commands[data.text];
 
-            newMsg.save(function(err, msg) {
-                if (err) return next(err);
+            if(command) {
+                command.handler(data, bot, function(msg, bot, emit) {
+                    socket.emit(emit, bot);
+                })
+            } else if(bot.online) {
+                var newMsg  = new Message();
+                newMsg.date = Date.now();
+                newMsg.user = me;
+                newMsg.bot  = bot._id;
+                newMsg.text = data.text;
 
-                socket.emit('recieveMessage', msg);
-                handleMessage(me, bot, msg, function(err, answer) {
-                    if(err) return next(err);
-                    if(answer) {
-                        answer = answer.toObject();
-                        answer.bot = socket.bot;               //faster then model.populate
-                        socket.emit('recieveMessage', answer);
-                    }
-                });
+                newMsg.save(function(err, msg) {
+                    if (err) return next(err);
 
-            })
+                    socket.emit('recieveMessage', msg);
+                    handleMessage(me, bot, msg, function(err, answer) {
+                        if(err) return next(err);
+                        if(answer) {
+                            answer = answer.toObject();
+                            answer.bot = socket.bot;               //faster then model.populate
+                            socket.emit('recieveMessage', answer);
+                        }
+                    });
+
+                })
+            }
 
         });
 

@@ -46,6 +46,11 @@ export class AppComponent implements OnInit{
         this.getContacts();
         this.MessagesService.$messages.subscribe(data => this.messages = data);
         this.MessagesService.socketConnect();
+        this.MessagesService.$status.subscribe(data => {
+            let index = this.contacts.findIndex(contact => contact._id === data._id);
+            this.contacts.splice(index, 1, data);
+            this.contacts = this.contacts.slice();
+        });
     }
 
 }

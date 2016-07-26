@@ -41,6 +41,11 @@ var AppComponent = (function () {
         this.getContacts();
         this.MessagesService.$messages.subscribe(function (data) { return _this.messages = data; });
         this.MessagesService.socketConnect();
+        this.MessagesService.$status.subscribe(function (data) {
+            var index = _this.contacts.findIndex(function (contact) { return contact._id === data._id; });
+            _this.contacts.splice(index, 1, data);
+            _this.contacts = _this.contacts.slice();
+        });
     };
     AppComponent = __decorate([
         core_1.Component({

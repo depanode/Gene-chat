@@ -8,7 +8,6 @@ import { Http, Response } from '@angular/http';
 @Injectable()
 export class ContactsService {
     constructor(private http: Http) {
-
     }
 
     private contactsUrl = '/contacts';
