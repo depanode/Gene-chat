@@ -10,7 +10,6 @@ export class ContactsService {
     constructor(private http: Http) {
     }
 
-
     private contactsUrl = '/contacts';
 
     getContacts() {
