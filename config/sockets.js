@@ -80,6 +80,7 @@ module.exports = function (io) {
 
                     socket.emit('recieveMessage', msg);
                     handleMessage(me, bot, msg, function(err, answer) {
+                        console.log(answer);
                         if(err) return next(err);
                         if(answer) {
                             answer = answer.toObject();
@@ -101,9 +102,9 @@ module.exports = function (io) {
 function sendHistory(bot, me, callback) {
     Message
         .find({user: me, bot: bot._id})
-        .sort({date: -1})
-        .limit(10)
+        //.sort({date: -1})
+        //.limit(10)
         .populate('bot')
-        .sort({date: 1})
+        //.sort({date: 1})
         .exec(callback)
 }

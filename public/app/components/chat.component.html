@@ -11,10 +11,15 @@
     </div>
     <div ps class='messages-block'>
 
-        <div class='message-block' [class.bot]="!message.authorUser" [class.me]="message.authorUser" *ngFor="let message of messages">
+        <div class='message-block'
+             *ngFor="let message of messages; let last = last"
+             [class.bot]="!message.authorUser"
+             [class.me]="message.authorUser"
+             [class.last-message]="last"
+             attr.data-time="{{seenTime ? 'Seen: ' + (seenTime | date: 'shortTime') : ''}}">
             <div class='message-header'>
                 <strong class='message-author'>{{message.authorUser ? 'Me': message.bot.name}}</strong>
-                <span class='message-data'>{{message.date | date: shortTime}}</span>
+                <span class='message-data'>{{message.date | date: 'shortTime'}}</span>
             </div>
             <div class='message-body'>
                 <span class='message-author'>{{message.text}}</span>

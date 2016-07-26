@@ -27,6 +27,8 @@ export class AppComponent implements OnInit{
     messages;
     contacts;
     selected;
+    seenTime;
+    onfocus: boolean;
 
     contactChanged(contact) {
         this.selected = contact;
@@ -41,9 +43,25 @@ export class AppComponent implements OnInit{
             });
     }
 
+    onFocus() {
+        this.onfocus = true;
+        this.seenTime = Date.now();
+    }
+
+    onBlur() {
+        this.onfocus = false;
+    }
+
     ngOnInit() {
         this.getContacts();
-        this.MessagesService.$messages.subscribe(data => this.messages = data);
+        this.MessagesService.$messages.subscribe(data => {
+            this.messages = data;
+            if(this.onfocus) {
+                this.seenTime = Date.now();
+            } else {
+                this.seenTime = null;
+            }
+        });
         this.MessagesService.socketConnect();
         this.MessagesService.$status.subscribe(data => {
             let index = this.contacts.findIndex(contact => contact._id === data._id);

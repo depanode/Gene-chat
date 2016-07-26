@@ -26,6 +26,9 @@ export class ChatBlock{
     @Input()
     messages;
 
+    @Input()
+    seenTime;
+
     sendMessage() {
         if (/\S/.test(this.message)) {
             this.MessagesService.sendMessage(this.message);
