@@ -10,7 +10,7 @@ import { filterContactsBy } from '../pipes/contacts-filter';
 
 @Component({
     selector: 'contact-list',
-    templateUrl: `app/components/contact-list.component.html`,
+    templateUrl: 'app/components/contact-list.component.html',
     pipes: [filterContactsBy]
 })
 
@@ -40,6 +40,7 @@ export class ContactList implements OnInit{
         }
         this.selectedContact = contact;
         this.contactSelected.emit(contact);
+        this.ContactsService.selectContact(contact);
     }
 
     getContacts() {
@@ -52,7 +53,8 @@ export class ContactList implements OnInit{
 
     ngOnInit() {
         this.getContacts();
-        this.MessagesService.$status.subscribe(data => {
+        this.ContactsService.getStatuses();
+        this.ContactsService.$status.subscribe(data => {
             let index = this.contacts.findIndex(contact => contact._id === data._id);
             this.contacts[index].online = data.online;
         });

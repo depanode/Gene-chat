@@ -2,7 +2,7 @@
  * Created by argho on 23.07.2016.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
@@ -25,9 +25,12 @@ export class AppComponent implements OnInit{
 
     selected;
 
+    @ViewChild(ChatBlock)
+    ChatBlock: ChatBlock;
+
     contactChanged(contact) {
         this.selected = contact;
-        this.MessagesService.selectContact(contact);
+        this.ChatBlock.messages = [];
     }
 
     ngOnInit() {
