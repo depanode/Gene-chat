@@ -26,7 +26,6 @@ export class AppComponent implements OnInit{
 
     contacts;
     selected;
-    lastMessage;
     onfocus: boolean = true;
     messages = [];
 
