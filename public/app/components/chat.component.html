@@ -16,7 +16,7 @@
              [class.bot]="!message.authorUser"
              [class.me]="message.authorUser"
              [class.last-message]="last"
-             attr.data-time="{{seenTime ? 'Seen: ' + (seenTime | date: 'shortTime') : ''}}">
+             attr.data-time="{{message.seen ? 'Seen ' + (message.seen | date: 'shortTime') : ''}}">
             <div class='message-header'>
                 <strong class='message-author'>{{message.authorUser ? 'Me': message.bot.name}}</strong>
                 <span class='message-data'>{{message.date | date: 'shortTime'}}</span>

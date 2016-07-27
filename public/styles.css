@@ -256,11 +256,11 @@ my-app:empty + .loading h1 {
     content: attr(data-time);
     position: absolute;
     top: 100%;
-    left: 10px;
+    left: 0px;
     margin-top: 10px;
     font-family: 'Open Sans', serif;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     color: grey;
 }
 

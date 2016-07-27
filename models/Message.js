@@ -22,8 +22,17 @@ var messageSchema = new mongoose.Schema({
     chat: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Chat'
+    },
+    seen: {
+        type: Date,
+        default: null
     }
 });
+
+messageSchema.methods.makeSeen = function(callback) {
+    this.seen = Date.now();
+    this.save(callback);
+};
 
 messageSchema.statics.random = function(callback) {
     this.count(function(err, count) {

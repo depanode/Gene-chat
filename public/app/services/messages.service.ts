@@ -43,13 +43,13 @@ export class MessagesService {
 
         this.socket.on('recieveMessage', (data) =>{
             this.messages.push(data);
-            this.messagesObserver.next(this.messages);
+            this.messagesObserver.next(data);
             this.scrollObserver.next();
         });
 
         this.socket.on('recieveHistory', data => {
             this.messages = data;
-            this.messagesObserver.next(this.messages);
+            data.forEach(el => this.messagesObserver.next(el));
             this.scrollObserver.next();
         });
 
@@ -61,12 +61,18 @@ export class MessagesService {
     sendMessage(message) {
         this.socket.emit('sendMessage', {
             'user': localStorage.getItem("soketid"),
-            'text': message
+            'text': message,
+            'authorUser': true
         });
     }
 
     selectContact(contact) {
         this.socket.emit('changeContact', contact);
+    }
+
+    makeMessageSeen(message) {
+        this.socket.emit('makeMessageSeen', message);
+        message.seen = Date.now();
     }
 
 }

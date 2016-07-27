@@ -33,6 +33,9 @@ export class ContactList{
     }
 
     selectContact(contact) {
+        if(this.selectedContact === contact) {
+            return;
+        }
         this.selectedContact = contact;
         this.contactSelected.emit(contact);
     }

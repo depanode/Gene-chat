@@ -3,7 +3,6 @@
         <chat-block
                 [selected]="selected"
                 [messages]="messages"
-                [seenTime]="seenTime"
                 (window:focus)="onFocus($event)"
                 (window:blur)="onBlur($event)"></chat-block>
         <contact-list [contacts]="contacts" (contactSelected)="contactChanged($event)"></contact-list>

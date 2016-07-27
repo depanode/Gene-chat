@@ -22,6 +22,8 @@ module.exports = function (io) {
 
         socket.on('disconnect', disconnect);
 
+        socket.on('makeMessageSeen', makeMessageSeen);
+
         ///////////////////////////////////////////////////
 
         function join(data) {
@@ -62,34 +64,51 @@ module.exports = function (io) {
             var command = commands[data.text];
 
             if(command) {
+
                 command.handler(data, bot, function(msg, bot, action, event) {
                     socket.emit(event, bot);
                     if(action === 'broadcast'){
                         socket.broadcast.emit(event, bot);
                     }
                 })
-            } else if(bot.online) {
+            } else if(!command && bot.online) {
+
                 var newMsg  = new Message();
                 newMsg.date = Date.now();
                 newMsg.user = me;
                 newMsg.bot  = bot._id;
                 newMsg.text = data.text;
+                newMsg.seen = data.authorUser ? Date.now() : null;
 
                 newMsg.save(function(err, msg) {
                     if (err) return next(err);
 
                     socket.emit('recieveMessage', msg);
                     handleMessage(me, bot, msg, function(err, answer) {
-                        console.log(answer);
                         if(err) return next(err);
                         if(answer) {
-                            answer = answer.toObject();
-                            answer.bot = socket.bot;               //faster then model.populate
-                            socket.emit('recieveMessage', answer);
+                            Message.populate(answer, 'bot', function(err, data) {
+                                socket.emit('recieveMessage', data);
+                            });
                         }
                     });
                 })
             }
+        }
+
+        function makeMessageSeen(message) {
+
+            Message.findOne({_id: message._id}, function(err, message){
+                if(err) {
+                    return next(err);
+                }
+
+                message.makeSeen(function(err) {
+                    if(err) {
+                        return next(err);
+                    }
+                })
+            })
         }
 
         function disconnect(data) {

@@ -24,15 +24,16 @@ export class AppComponent implements OnInit{
                 private MessagesService: MessagesService) {
     }
 
-    messages;
     contacts;
     selected;
-    seenTime;
-    onfocus: boolean;
+    lastMessage;
+    onfocus: boolean = true;
+    messages = [];
 
     contactChanged(contact) {
         this.selected = contact;
         this.MessagesService.selectContact(contact);
+        this.messages = [];
     }
 
     getContacts() {
@@ -45,22 +46,23 @@ export class AppComponent implements OnInit{
 
     onFocus() {
         this.onfocus = true;
-        this.seenTime = Date.now();
+        let unseen = this.messages.filter(message => !message.seen);
+        unseen.forEach(message => this.makeMessageSeen(message));
     }
 
     onBlur() {
         this.onfocus = false;
     }
 
+    makeMessageSeen(message) {
+        this.MessagesService.makeMessageSeen(message);
+    }
+
     ngOnInit() {
         this.getContacts();
         this.MessagesService.$messages.subscribe(data => {
-            this.messages = data;
-            if(this.onfocus) {
-                this.seenTime = Date.now();
-            } else {
-                this.seenTime = null;
-            }
+            this.onfocus && !data.seen ? this.makeMessageSeen(data) : '';
+            this.messages.push(data);
         });
         this.MessagesService.socketConnect();
         this.MessagesService.$status.subscribe(data => {
