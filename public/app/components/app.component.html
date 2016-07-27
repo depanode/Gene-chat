@@ -1,10 +1,6 @@
 <div class='body-bar'>
     <div class='main'>
-        <chat-block
-                [selected]="selected"
-                [messages]="messages"
-                (window:focus)="onFocus($event)"
-                (window:blur)="onBlur($event)"></chat-block>
-        <contact-list [contacts]="contacts" (contactSelected)="contactChanged($event)"></contact-list>
+        <chat-block [selected]="selected"></chat-block>
+        <contact-list (contactSelected)="contactChanged($event)"></contact-list>
     </div>
 </div>

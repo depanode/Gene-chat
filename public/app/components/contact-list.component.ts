@@ -2,8 +2,10 @@
  * Created by argho on 23.07.2016.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 
+import { ContactsService } from '../services/contacts.service';
+import { MessagesService } from '../services/messages.service';
 import { filterContactsBy } from '../pipes/contacts-filter';
 
 @Component({
@@ -12,18 +14,18 @@ import { filterContactsBy } from '../pipes/contacts-filter';
     pipes: [filterContactsBy]
 })
 
-export class ContactList{
-    constructor(){
+export class ContactList implements OnInit{
+    constructor(private ContactsService: ContactsService,
+                private MessagesService: MessagesService){
 
     }
 
     onlyOnline: boolean = false;
     nameContains: string = '';
 
-    selectedContact;
-
-    @Input()
     contacts;
+    selected;
+    selectedContact;
 
     @Output()
     contactSelected = new EventEmitter();
@@ -38,6 +40,22 @@ export class ContactList{
         }
         this.selectedContact = contact;
         this.contactSelected.emit(contact);
+    }
+
+    getContacts() {
+        this.ContactsService.getContacts()
+            .subscribe(contacts => {
+                this.contacts = contacts;
+                this.selectContact(contacts[0]);
+            });
+    }
+
+    ngOnInit() {
+        this.getContacts();
+        this.MessagesService.$status.subscribe(data => {
+            let index = this.contacts.findIndex(contact => contact._id === data._id);
+            this.contacts[index].online = data.online;
+        });
     }
 
 }

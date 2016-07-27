@@ -20,54 +20,18 @@ import { PsDirective } from '../directives/scrollbar.directive';
 })
 
 export class AppComponent implements OnInit{
-    constructor(private ContactsService: ContactsService,
-                private MessagesService: MessagesService) {
+    constructor(private MessagesService: MessagesService) {
     }
 
-    contacts;
     selected;
-    onfocus: boolean = true;
-    messages = [];
 
     contactChanged(contact) {
         this.selected = contact;
         this.MessagesService.selectContact(contact);
-        this.messages = [];
-    }
-
-    getContacts() {
-        this.ContactsService.getContacts()
-            .subscribe(contacts => {
-                this.contacts = contacts;
-                this.selected = contacts[0];
-            });
-    }
-
-    onFocus() {
-        this.onfocus = true;
-        let unseen = this.messages.filter(message => !message.seen);
-        unseen.forEach(message => this.makeMessageSeen(message));
-    }
-
-    onBlur() {
-        this.onfocus = false;
-    }
-
-    makeMessageSeen(message) {
-        this.MessagesService.makeMessageSeen(message);
     }
 
     ngOnInit() {
-        this.getContacts();
-        this.MessagesService.$messages.subscribe(data => {
-            this.onfocus && !data.seen ? this.makeMessageSeen(data) : '';
-            this.messages.push(data);
-        });
         this.MessagesService.socketConnect();
-        this.MessagesService.$status.subscribe(data => {
-            let index = this.contacts.findIndex(contact => contact._id === data._id);
-            this.contacts[index].online = data.online;
-        });
     }
 
 }
