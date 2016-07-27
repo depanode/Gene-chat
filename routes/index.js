@@ -19,9 +19,6 @@ router.get('/contacts', function (req, res) {
         }
         ////////                           if there is no bots in db - add them
         if(!contacts.length) {
-            /*bots.forEach(function(bot) {
-                bot = new Contact();
-            });*/
             Contact.collection.insertMany(bots, function(err, contacts) {
                 if(err) {
                     return next(err);
