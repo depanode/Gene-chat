@@ -13,7 +13,9 @@ var handlers = {
     reverse: function (message, callback) {
         var msg = message.text.split('').reverse().join('');
         message.text = msg;
-        callback(null, message);
+        setTimeout(function() {
+            callback(null, message);
+        }, 3 * 1000);
     },
 
     spam: function (message, callback) {
