@@ -58,7 +58,7 @@ function spam(socket, message, callback) {
 
     function generateDelay() {
         delay = Math.floor(10 + Math.random() * (120 + 1 - 10));
-        console.log('Next message after ' + delay + ' sec');
+        console.log('Next message in ' + delay + ' sec');
     }
 
     function randomize() {
