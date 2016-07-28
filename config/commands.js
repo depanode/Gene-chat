@@ -18,21 +18,23 @@ module.exports = {
     }
 };
 
-function goOffline(msg, bot, callback) {
+function goOffline(msg, bot, socket, callback) {
     var self = this;
     bot.goOffline(function(err, bot) {
-        if(err) {
-            return next(err);
+        if(err) return next(err);
+        if(socket.timerId) {
+            clearTimeout(socket.timerId);
         }
         callback(msg, bot, self.action, self.event);
     });
 }
 
-function goOnline(msg, bot, callback) {
+function goOnline(msg, bot, socket, callback) {
     var self = this;
     bot.goOnline(function(err, bot) {
-        if(err) {
-            return next(err);
+        if(err) return next(err);
+        if(socket.timerId) {
+            clearTimeout(socket.timerId);
         }
         callback(msg, bot, self.action, self.event);
     });

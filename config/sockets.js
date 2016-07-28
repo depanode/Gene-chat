@@ -71,8 +71,7 @@ module.exports = function (io) {
             var command = commands[data.text];
 
             if(command) {
-
-                command.handler(data, bot, function(msg, bot, action, event) {
+                command.handler(data, bot, socket, function(msg, bot, action, event) {
                     socket.emit(event, bot);
                     if(action === 'broadcast'){
                         socket.broadcast.emit(event, bot);
