@@ -17,6 +17,9 @@ var contactSchema = new mongoose.Schema({
     messageHandler: {
         type: String
     },
+    standAlone: {
+        type: Boolean
+    },
     description: {
         type: String
     }

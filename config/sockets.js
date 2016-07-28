@@ -28,22 +28,16 @@ module.exports = function (io) {
 
         function join(data) {
             socket.join(data.id);
-
-            Contact.find({}, function(err, contacts) {
-                if(err){
-                    return next(err);
-                }
-
-                socket.bot = contacts[0];
-                socket.me = data.id;
-
-                sendHistory(socket.bot, socket.me, function(err, data) {
-                    socket.emit('recieveHistory', data);
-                })
-            })
+            socket.me = data.id;
         }
 
         function changeContact(contact){
+
+            if(socket.timerId) {
+                clearTimeout(socket.timerId);
+                socket.timerId = null;
+            }
+
             Contact.findOne({_id: contact._id}, function(err, contact) {
                 if(err){
                     return next(err);
@@ -52,7 +46,20 @@ module.exports = function (io) {
                 socket.bot = contact;
 
                 sendHistory(socket.bot, socket.me, function(err, data) {
+                    if(err)  return next(err);
                     socket.emit('recieveHistory', data);
+
+                    if(contact.standAlone && contact.online) {
+                        handleMessage(socket, null, function(err, answer) {
+                            if(err) return next(err);
+
+                            if(answer) {
+                                Message.populate(answer, 'bot', function(err, data) {
+                                    socket.emit('recieveMessage', data);
+                                });
+                            }
+                        });
+                    }
                 })
             })
         }
@@ -71,7 +78,7 @@ module.exports = function (io) {
                         socket.broadcast.emit(event, bot);
                     }
                 })
-            } else if(!command && bot.online) {
+            } else {
 
                 var newMsg  = new Message();
                 newMsg.date = Date.now();
@@ -84,14 +91,17 @@ module.exports = function (io) {
                     if (err) return next(err);
 
                     socket.emit('recieveMessage', msg);
-                    handleMessage(me, bot, msg, function(err, answer) {
-                        if(err) return next(err);
-                        if(answer) {
-                            Message.populate(answer, 'bot', function(err, data) {
-                                socket.emit('recieveMessage', data);
-                            });
-                        }
-                    });
+
+                    if(bot.online) {
+                        handleMessage(socket, msg, function(err, answer) {
+                            if(err) return next(err);
+                            if(answer) {
+                                Message.populate(answer, 'bot', function(err, data) {
+                                    socket.emit('recieveMessage', data);
+                                });
+                            }
+                        });
+                    }
                 })
             }
         }
@@ -103,11 +113,13 @@ module.exports = function (io) {
                     return next(err);
                 }
 
-                message.makeSeen(function(err) {
-                    if(err) {
-                        return next(err);
-                    }
-                })
+                if(message) {
+                    message.makeSeen(function(err) {
+                        if(err) {
+                            return next(err);
+                        }
+                    })
+                }
             })
         }
 
@@ -121,9 +133,6 @@ module.exports = function (io) {
 function sendHistory(bot, me, callback) {
     Message
         .find({user: me, bot: bot._id})
-        //.sort({date: -1})
-        //.limit(10)
         .populate('bot')
-        //.sort({date: 1})
         .exec(callback)
 }

@@ -30,13 +30,13 @@ export class MessagesService {
 
         this.socket.emit('join', {id: localStorage.getItem('socketid')});
 
-        this.socket.on('connected', function(data){
+        this.socket.on('connected', data => {
             if(!socketid){
                 localStorage.setItem('socketid', data.id);
             }
         });
 
-        this.socket.on('recieveMessage', (data) =>{
+        this.socket.on('recieveMessage', data =>{
             this.messages.push(data);
             this.messagesObserver.next(data);
             this.scrollObserver.next();
